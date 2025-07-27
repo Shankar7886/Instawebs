@@ -1,211 +1,301 @@
-import { Facebook, Twitter, Instagram, Linkedin, ArrowUp, Mail, Phone, MapPin } from "lucide-react";
+import { Instagram, Github, ArrowUp, Mail, Phone, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import WhiteLogoIcon from "../../assets/logoIcon";
+import useGoToContactPage from "../Contact/contactFn";
+import WhiteLogoIcon from "../../assets/logoIcon"
 
-export default function ModernFooter() {
-  const [hoveredSocial, setHoveredSocial] = useState(null);
+const WhiteLogoIconFake = ({ width, height }) => (
+  <motion.div 
+    className="bg-white rounded-sm flex items-center justify-center text-black font-light text-xl tracking-[0.2em]"
+    style={{ width, height }}
+    whileHover={{ scale: 1.02 }}
+    transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+  >
+    
+    INSTAWEBS
+  </motion.div>
+);
 
+export default function PremiumFooter() {
+  const goContact = useGoToContactPage()
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        duration: 0.6
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
-  };
-
   const socialIcons = [
-    { icon: Facebook, color: "hover:bg-blue-600", name: "Facebook" },
-    { icon: Twitter, color: "hover:bg-blue-400", name: "Twitter" },
-    { icon: Instagram, color: "hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500", name: "Instagram" },
-    { icon: Linkedin, color: "hover:bg-blue-700", name: "LinkedIn" }
+    { icon: Instagram, name: "Instagram" },
+    { icon: Github, name: "GitHub" }
+  ];
+
+  const importantLinks = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about-us" },
+    { name: "Blog", path: "/blogs" },
+    { name: "Contact", path: "/contact" }
+  ];
+
+  const contactInfo = [
+    { icon: Mail, text: "Instawebscontact@gmail.com", label: "Email" },
+    { icon: Phone, text: "+91 96674 42617", label: "Phone" },
+    { icon: MapPin, text: "New Delhi, India", label: "Location" }
   ];
 
   return (
-    <footer className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 text-gray-300 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, #ffffff 1px, transparent 1px),
-                           radial-gradient(circle at 75% 75%, #ffffff 1px, transparent 1px)`,
-          backgroundSize: '50px 50px'
-        }} />
+    <footer className="bg-zinc-950 text-zinc-300 relative z-50" style={{ pointerEvents: 'auto' }}>
+      {/* Subtle background texture */}
+      <div className="absolute inset-0 opacity-[0.015]">
+        <div className="w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_50%)]" />
       </div>
 
-      {/* Animated Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-cyan-500/5 animate-pulse" />
-
-      <motion.div 
-        className="relative z-10 py-16 px-6 md:px-20"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+              <div className="relative z-10" style={{ pointerEvents: 'auto' }}>
+        {/* Main content */}
+        <div className="max-w-7xl mx-auto px-8 py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
             
-            {/* Logo & About */}
-            <motion.div variants={itemVariants} className="space-y-4">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
+            {/* Brand section */}
+            <motion.div 
+              className="lg:col-span-5 space-y-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              viewport={{ once: true }}
+            >
+              <div className="space-y-6">
+                <WhiteLogoIconFake width="160px" height="48px" />
+                
+                <motion.p 
+                  className="text-zinc-400 text-lg leading-relaxed font-light max-w-md"
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  viewport={{ once: true }}
+                >
+                  We craft digital experiences that blend innovation with timeless design principles, 
+                  creating solutions that stand the test of time.
+                </motion.p>
+              </div>
+
+              <motion.div 
+                className="space-y-6"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                viewport={{ once: true }}
               >
-               <WhiteLogoIcon width={"100px"} height={"100px"} />
+                {contactInfo.map((item, index) => (
+                  <motion.div 
+                    key={index}
+                    className="group flex items-center gap-4 cursor-pointer"
+                    whileHover={{ x: 4 }}
+                    transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  >
+                    <div className="w-10 h-10 border border-zinc-800 rounded-sm flex items-center justify-center group-hover:border-zinc-600 transition-colors duration-500">
+                      <item.icon className="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors duration-500" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-zinc-500 uppercase tracking-wider font-light mb-1">
+                        {item.label}
+                      </p>
+                      <p className="text-zinc-300 font-light tracking-wide group-hover:text-white transition-colors duration-500">
+                        {item.text}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
               </motion.div>
-              <p className="text-gray-400 leading-relaxed">
-                A modern solution for managing your business with ease and efficiency. 
-                Empowering teams worldwide.
-              </p>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center gap-2 text-gray-400">
-                  <Mail className="w-4 h-4" />
-                  <span>Instawebscontact@gmail.com</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-400">
-                  <Phone className="w-4 h-4" />
-                  <span>+91 9667442617</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-400">
-                  <MapPin className="w-4 h-4" />
-                  <span>Moti Nagar , New Delhi </span>
-                </div>
+            </motion.div>
+
+            {/* Navigation */}
+            <motion.div 
+              className="lg:col-span-3 space-y-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+              viewport={{ once: true }}
+            >
+              <div>
+                <h3 className="text-white text-sm uppercase tracking-[0.2em] font-light mb-8">
+                  Navigation
+                </h3>
+                
+                <nav className="space-y-4">
+                  {importantLinks.map((link, index) => (
+                    <motion.div 
+                      key={link.name}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ 
+                        duration: 0.6, 
+                        delay: 0.5 + index * 0.1,
+                        ease: [0.25, 0.46, 0.45, 0.94]
+                      }}
+                      viewport={{ once: true }}
+                    >
+                      <motion.a 
+                        href={link.path} 
+                        className="text-zinc-400 hover:text-white font-light text-base tracking-wide transition-colors duration-500 block py-1 group relative"
+                        style={{ pointerEvents: 'auto', cursor: 'pointer' }}
+                        whileHover={{ x: 6 }}
+                        onMouseEnter={(e) => e.stopPropagation()}
+                        onMouseLeave={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          // Add your navigation logic here if needed
+                          console.log(`Navigating to ${link.path}`);
+                        }}
+                        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      >
+                        {link.name}
+                        <motion.div 
+                          className="absolute bottom-0 left-0 h-px bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"
+                          style={{ width: '100%' }}
+                        />
+                      </motion.a>
+                    </motion.div>
+                  ))}
+                </nav>
               </div>
             </motion.div>
 
-            {/* Quick Links */}
-            <motion.div variants={itemVariants}>
-              <h3 className="text-xl font-semibold text-white mb-6 relative">
-                Quick Links
-                <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500" />
-              </h3>
-              <ul className="space-y-3">
-                {["Home", "Features", "Pricing", "Contact"].map((link, index) => (
-                  <motion.li 
-                    key={link}
-                    whileHover={{ x: 5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <a 
-                      href="#" 
-                      className="text-gray-400 hover:text-white transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)] relative group"
-                    >
-                      {link}
-                      <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Resources */}
-            <motion.div variants={itemVariants}>
-              <h3 className="text-xl font-semibold text-white mb-6 relative">
-                Resources
-                <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500" />
-              </h3>
-              <ul className="space-y-3">
-                {["Blog", "Documentation", "Support", "API"].map((link, index) => (
-                  <motion.li 
-                    key={link}
-                    whileHover={{ x: 5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <a 
-                      href="#" 
-                      className="text-gray-400 hover:text-white transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.5)] relative group"
-                    >
-                      {link}
-                      <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Social Media & Newsletter */}
-            <motion.div variants={itemVariants} className="space-y-6">
+            {/* Social & CTA */}
+            <motion.div 
+              className="lg:col-span-4 space-y-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              viewport={{ once: true }}
+            >
               <div>
-                <h3 className="text-xl font-semibold text-white mb-6 relative">
-                  Connect With Us
-                  <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500" />
+                <h3 className="text-white text-sm uppercase tracking-[0.2em] font-light mb-8">
+                  Connect
                 </h3>
-                <div className="flex flex-wrap gap-3">
+                
+                <div className="flex gap-4">
                   {socialIcons.map((social, index) => (
                     <motion.a
                       key={social.name}
                       href="#"
-                      className={`p-3 bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 transition-all duration-300 ${social.color} group relative overflow-hidden`}
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      onHoverStart={() => setHoveredSocial(index)}
-                      onHoverEnd={() => setHoveredSocial(null)}
+                      className="w-12 h-12 border border-zinc-800 hover:border-zinc-600 rounded-sm flex items-center justify-center group transition-all duration-500"
+                      style={{ pointerEvents: 'auto', cursor: 'pointer' }}
+                      title={social.name}
+                      onMouseEnter={(e) => e.stopPropagation()}
+                      onMouseLeave={(e) => e.stopPropagation()}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log(`Opening ${social.name}`);
+                      }}
+                      whileHover={{ 
+                        y: -2,
+                        transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+                      }}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ 
+                        opacity: 1, 
+                        y: 0,
+                        transition: { 
+                          duration: 0.6, 
+                          delay: 0.7 + index * 0.1,
+                          ease: [0.25, 0.46, 0.45, 0.94]
+                        }
+                      }}
+                      viewport={{ once: true }}
                     >
-                      <social.icon className="w-5 h-5 relative z-10 transition-colors duration-300" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                      <social.icon className="w-5 h-5 text-zinc-500 group-hover:text-white transition-colors duration-500" />
                     </motion.a>
                   ))}
                 </div>
               </div>
 
-              {/* Newsletter Signup */}
-             
+              <motion.div 
+                className="border border-zinc-800 p-8 space-y-4"
+                initial={{ opacity: 0, scale: 0.98 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                viewport={{ once: true }}
+              >
+                <h4 className="text-white text-lg font-light tracking-wide">
+                  Start Your Project
+                </h4>
+                <p className="text-zinc-400 text-sm font-light leading-relaxed">
+                  Ready to bring your vision to life? Let's discuss how we can help you achieve your goals.
+                </p>
+                <motion.a 
+                  href="/contact"
+                  className="inline-flex items-center gap-3 text-white text-sm font-light tracking-wider uppercase hover:gap-4 transition-all duration-500 mt-6 group"
+                  style={{ pointerEvents: 'auto', cursor: 'pointer' }}
+                  onMouseEnter={(e) => e.stopPropagation()}
+                  onMouseLeave={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goContact()
+                  }}
+                  whileHover={{ x: 2 }}
+                  transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                >
+                  Get in Touch
+                  <ArrowUp className="w-4 h-4 rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-500" />
+                </motion.a>
+              </motion.div>
             </motion.div>
           </div>
-
-          {/* Divider with gradient */}
-          <motion.div 
-            className="relative mb-8"
-            variants={itemVariants}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-700 to-transparent h-px" />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/30 to-transparent h-px animate-pulse" />
-          </motion.div>
-
-          {/* Bottom Section */}
-          <motion.div 
-            className="flex flex-col md:flex-row justify-between items-center gap-4"
-            variants={itemVariants}
-          >
-            <div className="text-center md:text-left">
-              <p className="text-gray-500 text-sm">
-                © {new Date().getFullYear()} MyPlatform. All rights reserved.
-              </p>
-              <div className="flex flex-wrap gap-4 mt-2 text-xs text-gray-600">
-                <a href="#" className="hover:text-gray-400 transition-colors duration-300">Privacy Policy</a>
-                <a href="#" className="hover:text-gray-400 transition-colors duration-300">Terms of Service</a>
-                <a href="#" className="hover:text-gray-400 transition-colors duration-300">Cookie Policy</a>
-              </div>
-            </div>
-
-            {/* Back to Top Button */}
-            <motion.button
-              onClick={scrollToTop}
-              className="p-3 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 backdrop-blur-sm border border-gray-700/50 rounded-full text-gray-400 hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 group"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ArrowUp className="w-5 h-5 group-hover:animate-bounce" />
-            </motion.button>
-          </motion.div>
         </div>
-      </motion.div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-zinc-900">
+          <div className="max-w-7xl mx-auto px-8 py-8">
+            <motion.div 
+              className="flex flex-col sm:flex-row justify-between items-center gap-6"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              viewport={{ once: true }}
+            >
+              <div className="text-center sm:text-left">
+                <p className="text-zinc-500 text-sm font-light tracking-wide">
+                  © {new Date().getFullYear()} InstaWebs. All rights reserved.
+                </p>
+                <div className="flex gap-8 text-xs text-zinc-600 mt-2">
+                  <motion.a 
+                    href="#" 
+                    className="hover:text-zinc-400 transition-colors duration-500"
+                    whileHover={{ y: -1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    Privacy Policy
+                  </motion.a>
+                  <motion.a 
+                    href="#" 
+                    className="hover:text-zinc-400 transition-colors duration-500"
+                    whileHover={{ y: -1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    Terms of Service
+                  </motion.a>
+                </div>
+              </div>
+
+              <motion.button
+                // onClick={scrollToTop}
+                className="w-12 h-12 border border-zinc-800 hover:border-zinc-600 rounded-sm flex items-center justify-center group transition-all duration-500"
+                style={{ pointerEvents: 'auto', cursor: 'pointer' }}
+                title="Back to top"
+                onMouseEnter={(e) => e.stopPropagation()}
+                onMouseLeave={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  scrollToTop();
+                }}
+                whileHover={{ 
+                  y: -3,
+                  transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+                }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <ArrowUp className="w-5 h-5 text-zinc-500 group-hover:text-white transition-colors duration-500" />
+              </motion.button>
+            </motion.div>
+          </div>
+        </div>
+      </div>
     </footer>
   );
 }
